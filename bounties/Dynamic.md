@@ -3,9 +3,11 @@
 ## Dynamic 
 
 ### Prize Requirements
+
+🤝 Integration magic ⸺ $1,500
     
 ### Please add a sentence or two on why you're applicable for this prize.
-Wallet and web2 login for our web interface for creating and buying the NFTs.
+Wallet and Web2 login for our web interface to enable smooth onboarding for our VR game!
 
 ### Link to the code where the tech is used.
 
