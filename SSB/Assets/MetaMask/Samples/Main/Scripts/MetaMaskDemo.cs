@@ -6,7 +6,9 @@ using MetaMask.Cryptography;
 using MetaMask.Models;
 using MetaMask.SocketIOClient;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
+using System.Collections;
+using UnityEngine.Networking;
 namespace MetaMask.Unity.Samples
 {
 
@@ -27,6 +29,11 @@ namespace MetaMask.Unity.Samples
         public event EventHandler onSignSend;
         /// <summary>Occurs when a transaction is sent.</summary>
         public event EventHandler onTransactionSent;
+        public event EventHandler openAlert;
+        public event EventHandler onNFTFetch;
+        public event EventHandler gameStartFailed;
+
+
         /// <summary>Raised when the transaction result is received.</summary>
         /// <param name="e">The event arguments.</param>
         public event EventHandler<MetaMaskEthereumRequestResultEventArgs> onTransactionResult;
@@ -40,13 +47,15 @@ namespace MetaMask.Unity.Samples
         protected MetaMaskConfig config;
 
         [SerializeField]
-        protected string ConnectAndSignMessage = "This is a test connect and sign message from MetaMask Unity SDK";
+        protected string ConnectAndSignMessage = "Connect and Sign from Super Smash Bears using MetaMask Unity SDK!";
 
         public GameObject tokenList;
         public GameObject mainMenu;
         public GameObject nftList;
         
         private GameObject currentUI;
+
+        private bool nftExists = false;
 
         #endregion
 
@@ -140,7 +149,7 @@ namespace MetaMask.Unity.Samples
 
         public void ConnectAndSign()
         {
-            MetaMaskUnity.Instance.ConnectAndSign("This is a test message");
+            MetaMaskUnity.Instance.ConnectAndSign("Connect and Sign from Super Smash Bears!");
         }
 
         /// <summary>Sends a transaction to the Ethereum network.</summary>
@@ -170,7 +179,7 @@ namespace MetaMask.Unity.Samples
         /// <exception cref="InvalidOperationException">Thrown when the application isn't in foreground.</exception>
         public async void Sign()
         {
-            string msgParams = "{\"domain\":{\"chainId\":1,\"name\":\"Ether Mail\",\"verifyingContract\":\"0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC\",\"version\":\"1\"},\"message\":{\"contents\":\"Hello, Bob!\",\"from\":{\"name\":\"Cow\",\"wallets\":[\"0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826\",\"0xDeaDbeefdEAdbeefdEadbEEFdeadbeEFdEaDbeeF\"]},\"to\":[{\"name\":\"Bob\",\"wallets\":[\"0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB\",\"0xB0BdaBea57B0BDABeA57b0bdABEA57b0BDabEa57\",\"0xB0B0b0b0b0b0B000000000000000000000000000\"]}]},\"primaryType\":\"Mail\",\"types\":{\"EIP712Domain\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"version\",\"type\":\"string\"},{\"name\":\"chainId\",\"type\":\"uint256\"},{\"name\":\"verifyingContract\",\"type\":\"address\"}],\"Group\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"members\",\"type\":\"Person[]\"}],\"Mail\":[{\"name\":\"from\",\"type\":\"Person\"},{\"name\":\"to\",\"type\":\"Person[]\"},{\"name\":\"contents\",\"type\":\"string\"}],\"Person\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"wallets\",\"type\":\"address[]\"}]}}";
+            string msgParams = "{\"domain\":{\"chainId\":1,\"name\":\"Ether Mail\",\"verifyingContract\":\"0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC\",\"version\":\"1\"},\"message\":{\"contents\":\"Hello, player!\",\"from\":{\"name\":\"Super Smash Bears\",\"wallets\":[\"0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826\",\"0xDeaDbeefdEAdbeefdEadbEEFdeadbeEFdEaDbeeF\"]},\"to\":[{\"name\":\"Bob\",\"wallets\":[\"0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB\",\"0xB0BdaBea57B0BDABeA57b0bdABEA57b0BDabEa57\",\"0xB0B0b0b0b0b0B000000000000000000000000000\"]}]},\"primaryType\":\"Mail\",\"types\":{\"EIP712Domain\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"version\",\"type\":\"string\"},{\"name\":\"chainId\",\"type\":\"uint256\"},{\"name\":\"verifyingContract\",\"type\":\"address\"}],\"Group\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"members\",\"type\":\"Person[]\"}],\"Mail\":[{\"name\":\"from\",\"type\":\"Person\"},{\"name\":\"to\",\"type\":\"Person[]\"},{\"name\":\"contents\",\"type\":\"string\"}],\"Person\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"wallets\",\"type\":\"address[]\"}]}}";
             string from = MetaMaskUnity.Instance.Wallet.SelectedAddress;
 
             var paramsArray = new string[] { from, msgParams };
@@ -231,6 +240,57 @@ namespace MetaMask.Unity.Samples
         public void ShowNftList()
         {
             SetCurrentMenu(nftList);
+        }
+
+        public void StartGame()
+        {
+            if (nftExists)
+            {
+                Debug.Log("Game started");
+                SceneManager.LoadScene("Super Smash Bears");
+            }
+            else
+            {
+                Debug.Log("No Super Smash Bear NFTs found. Please obtain one to play the game.");
+                gameStartFailed?.Invoke(this, EventArgs.Empty);
+
+            }
+        }
+
+        public void GameStart()
+        {
+            SceneManager.LoadScene("Super Smash Bears");
+        }
+
+        public void StartGetNFTs()
+        {
+            StartCoroutine(GetNFTs());
+        }
+
+        IEnumerator GetNFTs()
+        {
+            // Replace 'YOUR_ALCHEMY_API_KEY' with your actual Alchemy API key
+            string url = "https://polygon-mainnet.g.alchemy.com/nft/v2/374l9-eucheJf7r_lvnEZbEJ3dmtKRqn/getNFTs?owner=0x0E5d299236647563649526cfa25c39d6848101f5&withMetadata=true&pageSize=100";
+
+            using (UnityWebRequest request = UnityWebRequest.Get(url))
+            {
+                request.SetRequestHeader("accept", "application/json");
+
+                yield return request.SendWebRequest();
+
+                if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
+                {
+                    Debug.LogError("Error: " + request.error);
+                }
+                else
+                {
+                    Debug.Log("Received: " + request.downloadHandler.text);
+                    nftExists = true;
+                    onNFTFetch?.Invoke(this, EventArgs.Empty);
+
+                    // Here you can process the JSON response as needed
+                }
+            }
         }
 
         #endregion
