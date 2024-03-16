@@ -16,4 +16,10 @@ What's better than banning cheaters by hardware or even IP? Banning by unique hu
 
 ### Link to the code where the tech is used.
 
+https://github.com/saccharinedreams/ETHGlobal-London/blob/2e05f582c7866e6870f0266a87ccb12be5a62629/src/Home.js#L166-L178
+
+https://github.com/saccharinedreams/ETHGlobal-London/blob/main/Demos/WorldID%20Authentication%20Demo.mov
+
 ### Additional Feedback
+
+Very good documentation for helping us integrate WorldID authentication into our app!

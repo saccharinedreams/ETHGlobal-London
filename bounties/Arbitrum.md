@@ -17,11 +17,14 @@ Qualification Requirements
     
 ### Please add a sentence or two on why you're applicable for this prize.
 
-Deployed smart contract on Arb One for tracking metrics in our VR game
+Smart contract deployed on Arb One for tracking our VR game's leaderboard of bear kill metrics for our users!
 
 ### Link to the code where the tech is used.
 
 https://arbiscan.io/address/0x18A96518de273B0537C8b0e26E77C6432709FDDd
 
+https://github.com/saccharinedreams/ETHGlobal-London/blob/fad7a56e73e8dd26204efd9702ecc14fbe75499b/contracts/SuperSmashBears.sol#L1-L28
 
 ### Additional Feedback
+
+Very good documentation and enjoyable experience deploying on Arbitrum!
