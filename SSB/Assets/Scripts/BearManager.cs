@@ -6,13 +6,13 @@ public class BearManager : MonoBehaviour
     public Vector3[] spawnPoints; // Array of spawn points
     public float initialSpawnDelay = 2f;
     public float spawnInterval = 10f;
-    public float decreaseAmount = 1f;
-    public float minimumInterval = 1f;
+    public float decreaseAmount = 0.5f;
+    public float minimumInterval = 3f;
     private float timeSinceLastSpawn;
     private float elapsedTime = 0f;
     private bool firstSpawn = true;
     public float initialSpawnChance = 0.33f; // chance to spawn at start
-    public float spawnChanceIncrease = 0.075f;
+    public float spawnChanceIncrease = 0.05f;
     public float spawnChanceIncrementInterval = 10f;
     private float spawnChance;
 

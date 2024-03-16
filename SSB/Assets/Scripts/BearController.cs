@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
+
 
 public class BearController : MonoBehaviour
 {
@@ -55,9 +57,24 @@ public class BearController : MonoBehaviour
                 animator.SetBool("Run Forward", false);
                 animator.SetBool("WalkForward", false);
                 animator.SetBool("Attack1", true);
-                // Trigger player death
+                projectile.SetActive(false);
+                table.SetActive(false);
+                ScoreManager.Instance.ResetScore();
+                UIManager.Instance.UpdateScoreUI();
+                Light directionalLight = FindObjectOfType<Light>();
+                if (directionalLight != null && directionalLight.type == LightType.Directional)
+                {
+                    directionalLight.enabled = false;
+                }
+                StartCoroutine(ReloadSceneAfterDelay(5)); // Wait for 5 seconds before resetting the scene
             }
         }   
+    }
+
+    private IEnumerator ReloadSceneAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the current scene
     }
 
     public void HitByProjectile()
@@ -80,6 +97,8 @@ public class BearController : MonoBehaviour
 
         // Play "Death" animation
         animator.SetBool("Death", true);
+        ScoreManager.Instance.AddScore(1); 
+        UIManager.Instance.UpdateScoreUI();
         yield return new WaitForSeconds(3.2f); // Wait for the death animation to play through
         Destroy(gameObject); // Remove the bear after the animations
     }
