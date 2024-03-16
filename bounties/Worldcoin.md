@@ -21,3 +21,5 @@ https://github.com/saccharinedreams/ETHGlobal-London/blob/2e05f582c7866e6870f026
 https://github.com/saccharinedreams/ETHGlobal-London/blob/main/Demos/WorldID%20Authentication%20Demo.mov
 
 ### Additional Feedback
+
+Very good documentation for helping us integrate WorldID authentication into our app!

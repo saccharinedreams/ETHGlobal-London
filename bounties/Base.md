@@ -22,3 +22,5 @@ https://sepolia.basescan.org/address/0x2110098737d42e8022261ebbff236351e0b66edb
 https://github.com/saccharinedreams/ETHGlobal-London/blob/fad7a56e73e8dd26204efd9702ecc14fbe75499b/contracts/SuperSmashBears.sol#L1-L28
 
 ### Additional Feedback
+
+Very good documentation and enjoyable experience deploying on Base!

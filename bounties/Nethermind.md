@@ -23,4 +23,8 @@ Super Smash Bears revolutionizes the metaverse by merging dynamic, generative wo
 
 ### Link to the code where the tech is used.
 
+https://github.com/saccharinedreams/ETHGlobal-London/tree/main/SSB
+
 ### Additional Feedback
+
+Spent a lot of time debugging our Unity code but super happy it ended up working!

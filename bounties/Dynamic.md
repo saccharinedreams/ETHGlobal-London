@@ -16,3 +16,5 @@ https://github.com/saccharinedreams/ETHGlobal-London/blob/da973eaa6efd2ac1e23127
 https://github.com/saccharinedreams/ETHGlobal-London/blob/main/Demos/Dynamic%20Wallet%20Demo.mov
 
 ### Additional Feedback
+
+Very good documentation for integrating Dynamic login with our web app!
