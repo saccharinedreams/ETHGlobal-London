@@ -17,7 +17,7 @@ Qualification Requirements
     
 ### Please add a sentence or two on why you're applicable for this prize.
 
-Deployed smart contract on Arb One for tracking kill metrics in our VR game
+Smart contract deployed on Arb One for tracking our VR game's leaderboard of bear kill metrics for our users!
 
 ### Link to the code where the tech is used.
 
