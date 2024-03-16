@@ -481,6 +481,7 @@
 "Assets/Scripts/BearController.cs"
 "Assets/Scripts/BearManager.cs"
 "Assets/Scripts/BearMovement.cs"
+"Assets/Scripts/Projectile.cs"
 -langversion:9.0
 
 /deterministic

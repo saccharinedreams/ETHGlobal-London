@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Blink/Art/Animals/Stylized/Demo_Animals/Bear_DEMO.unity
+- path: Assets/Scenes/Super Smash Bears.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

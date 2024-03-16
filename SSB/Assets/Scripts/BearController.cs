@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class BearController : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class BearController : MonoBehaviour
     public GameObject projectile;
     private bool tableDisabled = false;
     private bool projectileDisabled = false;
+    private bool isDying = false;
 
     void Start()
     {
@@ -18,44 +20,73 @@ public class BearController : MonoBehaviour
 
     void Update()
     {
-        float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
-        if (distanceToPlayer > 1.5)
-        {
-            // Bear moves towards the player if farther than 1 unit from the player
-            transform.position += transform.forward * speed * Time.deltaTime;
-            
-            // Check if the bear should run or walk based on its speed
-            if (speed > 4f)
+        if(isDying){
+            speed = 0;
+            animator.SetBool("Run Forward", false);
+            animator.SetBool("WalkForward", false);
+            animator.SetBool("Attack1", false);
+        }
+        else {
+            float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+            if (distanceToPlayer > 1.5)
             {
-                animator.SetBool("Run Forward", true);
-                animator.SetBool("WalkForward", false);
+                transform.position += transform.forward * speed * Time.deltaTime;
+                
+                if (speed > 4f)
+                {
+                    animator.SetBool("Run Forward", true);
+                    animator.SetBool("WalkForward", false);
+                }
+                else
+                {
+                    animator.SetBool("Run Forward", false);
+                    animator.SetBool("WalkForward", true);
+                }
+                animator.SetBool("Attack1", false);
             }
             else
             {
+                speed = 0; // Stop the bear's movement
                 animator.SetBool("Run Forward", false);
-                animator.SetBool("WalkForward", true);
-            }
-            animator.SetBool("Attack1", false); // Ensure the attack animation is not played
-        }
-        else
-        {
-            Debug.Log(distanceToPlayer);
-            // Bear stops and attacks if within 1 unit of the player
-            speed = 0; // Stop the bear's movement
-            animator.SetBool("Run Forward", false);
-            animator.SetBool("WalkForward", false); // Ensure walking animation is not played
-            animator.SetBool("Attack1", true);
-            if (!tableDisabled)
-            {
-                table.SetActive(false);
-                tableDisabled = true; // Ensure this happens only once
-            }
+                animator.SetBool("WalkForward", false);
+                animator.SetBool("Attack1", true);
+                // if (!tableDisabled)
+                // {
+                //     table.SetActive(false);
+                //     tableDisabled = true;
+                // }
 
-            if (!projectileDisabled)
-            {
-                projectile.SetActive(false);
-                projectileDisabled = true; // Ensure this happens only once
+                // if (!projectileDisabled)
+                // {
+                //     projectile.SetActive(false);
+                //     projectileDisabled = true;
+                // }
             }
+        }   
+    }
+
+    // Add this method to handle being hit by a projectile
+    public void HitByProjectile()
+    {
+        if(!isDying){
+            Debug.Log("HitByProjectile called and isDying was false.");
+            isDying = true;
+            StartCoroutine(PlayHitAndDeathAnimations());
         }
+    }
+
+    private IEnumerator PlayHitAndDeathAnimations()
+    {
+        // Ensure the bear stops moving and attacking
+        Debug.Log("PlayHitAndDeathAnimations coroutine started.");
+        speed = 0;
+        animator.SetBool("Run Forward", false);
+        animator.SetBool("WalkForward", false);
+        animator.SetBool("Attack1", false);
+
+        // Play "Death" animation
+        animator.SetBool("Death", true);
+        yield return new WaitForSeconds(3.2f); // Wait for the death animation to play through
+        Destroy(gameObject); // Remove the bear after the animations
     }
 }

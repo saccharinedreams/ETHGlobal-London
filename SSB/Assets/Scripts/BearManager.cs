@@ -39,6 +39,6 @@ public class BearManager : MonoBehaviour
         var bearController = newBear.GetComponent<BearController>();
 
         // Increase the speed based on elapsed time
-        bearController.speed = Mathf.Log(elapsedTime + 1) / 2 + 3;
+        bearController.speed = Mathf.Log(elapsedTime + 1) / 3 + 3;
     }
 }
