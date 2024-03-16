@@ -6,7 +6,8 @@ using MetaMask.Cryptography;
 using MetaMask.Models;
 using MetaMask.SocketIOClient;
 using UnityEngine;
-
+using System.Collections;
+using UnityEngine.Networking;
 namespace MetaMask.Unity.Samples
 {
 
@@ -27,6 +28,11 @@ namespace MetaMask.Unity.Samples
         public event EventHandler onSignSend;
         /// <summary>Occurs when a transaction is sent.</summary>
         public event EventHandler onTransactionSent;
+        public event EventHandler openAlert;
+        public event EventHandler onNFTFetch;
+        public event EventHandler gameStartFailed;
+
+
         /// <summary>Raised when the transaction result is received.</summary>
         /// <param name="e">The event arguments.</param>
         public event EventHandler<MetaMaskEthereumRequestResultEventArgs> onTransactionResult;
@@ -40,13 +46,15 @@ namespace MetaMask.Unity.Samples
         protected MetaMaskConfig config;
 
         [SerializeField]
-        protected string ConnectAndSignMessage = "This is a test connect and sign message from MetaMask Unity SDK";
+        protected string ConnectAndSignMessage = "This is a test connect and OnSignSendmessage from MetaMask Unity SDK";
 
         public GameObject tokenList;
         public GameObject mainMenu;
         public GameObject nftList;
         
         private GameObject currentUI;
+
+        private bool nftExists = false;
 
         #endregion
 
@@ -231,6 +239,52 @@ namespace MetaMask.Unity.Samples
         public void ShowNftList()
         {
             SetCurrentMenu(nftList);
+        }
+
+        public void StartGame()
+        {
+            if (nftExists)
+            {
+                Debug.Log("Game started");
+
+            }
+            else
+            {
+                Debug.Log("No Super Smash Bear NFTs found. Please obtain one to play the game.");
+                gameStartFailed?.Invoke(this, EventArgs.Empty);
+
+            }
+        }
+
+        public void StartGetNFTs()
+        {
+            StartCoroutine(GetNFTs());
+        }
+
+        IEnumerator GetNFTs()
+        {
+            // Replace 'YOUR_ALCHEMY_API_KEY' with your actual Alchemy API key
+            string url = "https://polygon-mainnet.g.alchemy.com/nft/v2/374l9-eucheJf7r_lvnEZbEJ3dmtKRqn/getNFTs?owner=0x0E5d299236647563649526cfa25c39d6848101f5&withMetadata=true&pageSize=100";
+
+            using (UnityWebRequest request = UnityWebRequest.Get(url))
+            {
+                request.SetRequestHeader("accept", "application/json");
+
+                yield return request.SendWebRequest();
+
+                if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
+                {
+                    Debug.LogError("Error: " + request.error);
+                }
+                else
+                {
+                    Debug.Log("Received: " + request.downloadHandler.text);
+                    nftExists = true;
+                    onNFTFetch?.Invoke(this, EventArgs.Empty);
+
+                    // Here you can process the JSON response as needed
+                }
+            }
         }
 
         #endregion

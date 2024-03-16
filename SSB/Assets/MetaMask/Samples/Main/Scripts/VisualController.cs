@@ -40,6 +40,11 @@ namespace MetaMask.Unity.Samples
             this.metaMaskTest.onSignSend += OnSignSend;
             this.metaMaskTest.onTransactionSent += OnTransactionSent;
             this.metaMaskTest.onTransactionResult += OnTransactionResult;
+            this.metaMaskTest.onNFTFetch += OnNFTFetch;
+            this.metaMaskTest.gameStartFailed += GameStartFailed;
+
+            this.metaMaskTest.openAlert += OpenAlert;
+
             if (Application.isMobilePlatform && MetaMaskUnityUITransport.DefaultInstance.IsDeeplinkAvailable())
             {
                 this.metaMaskTest.onWalletConnected += ConnectedFeedback;
@@ -55,6 +60,9 @@ namespace MetaMask.Unity.Samples
             this.metaMaskTest.onWalletReady -= OnWalletReady;
             this.metaMaskTest.onSignSend -= OnSignSend;
             this.metaMaskTest.onTransactionSent -= OnTransactionSent;
+            this.metaMaskTest.openAlert -= OpenAlert;
+            this.metaMaskTest.onNFTFetch -= OnNFTFetch;
+            this.metaMaskTest.gameStartFailed -= GameStartFailed;
             if (Application.isMobilePlatform && MetaMaskUnityUITransport.DefaultInstance.IsDeeplinkAvailable())
             {
                 this.metaMaskTest.onWalletConnected -= ConnectedFeedback;
@@ -162,6 +170,32 @@ namespace MetaMask.Unity.Samples
             }
         }
 
+        private void OpenAlert(object sender, EventArgs e)
+        {
+
+            ModalData modalData = new ModalData();
+            modalData.headerText = "custom";
+            modalData.bodyText = "alert";
+            UIModalManager.Instance.OpenModal(modalData);
+        }
+
+        private void GameStartFailed(object sender, EventArgs e)
+        {
+
+            ModalData modalData = new ModalData();
+            modalData.headerText = "Game Start Failed!";
+            modalData.bodyText = "Please verify your NFTs first!";
+            UIModalManager.Instance.OpenModal(modalData);
+        }
+
+        private void OnNFTFetch(object sender, EventArgs e)
+        {
+
+            ModalData modalData = new ModalData();
+            modalData.headerText = "NFTs Fetched!";
+            modalData.bodyText = "Your NFTs have been fetched!";
+            UIModalManager.Instance.OpenModal(modalData);
+        }
 
 
         private void OnSignSend(object sender, EventArgs e)
