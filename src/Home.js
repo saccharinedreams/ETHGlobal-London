@@ -20,6 +20,7 @@ import { StarknetWalletConnectors } from "@dynamic-labs/starknet";
 import { useState } from "react";
 
 function mintNFT(name, description, file_url, address) {
+  alert(`Minting your ${name} NFT, please wait up to 30s...`)
   console.log(process.env.REACT_APP_NFTPORT_KEY);
   const options = {
     method: "POST",
@@ -148,11 +149,11 @@ const Home = () => {
         alignItems: "center",
       }}
     >
+      <img style={{borderRadius: 50}} src="https://cdn.discordapp.com/attachments/1182787621370478593/1218590354920702073/benliang_Cartoony_bear_wearing_VR_headset_biting_ethereum_shard_2b02bbf6-af84-4e54-872c-fd0713ba223a.png?ex=660837b4&is=65f5c2b4&hm=593b03364b22ce76c71ab672d38b1f7d5b4d3a90c2ec67cacbfc07271f7442d6&" alt="Welcome Image" height={200} />
       <div>
         <p>Welcome to Super Smash Bears!</p>
       </div>
       <DynamicWidget />
-      <br />
       {primaryWallet && primaryWallet.address && (
         <div
           style={{
@@ -161,7 +162,10 @@ const Home = () => {
             alignItems: "center",
           }}
         >
-          <p>Thanks for logging in {primaryWallet.address}!</p>
+          <br />
+
+          <p>Thanks for logging in!</p>
+          <p>Connected wallet: {primaryWallet.address}</p>
 
           <IDKitWidget
             app_id="app_staging_dfbbb6c8ef7b17bae66db523a50c4b30" // obtained from the Developer Portal
@@ -176,62 +180,76 @@ const Home = () => {
               </Button>
             )}
           </IDKitWidget>
-      <br />
+          <br />
 
-{isVerified && <div>
-          <p>Choose your class below:</p>
+          {isVerified && (
+            <div>
+              <p>Choose your class below:</p>
 
-          <div style={{ display: "flex" }}>
-          {roles.map((role, index) => (
-        <div
-          key={index}
-          onClick={() => showModal(role)}
-          style={{
-            maxWidth: "200px",
-            marginLeft: "10px",
-            cursor: 'pointer',
-            flexDirection: 'column', // Add this line to make it a column
-            justifyContent: "center", // Add this line to center the button horizontally
-            border: "1px solid black", // Add this line to add an outline
-            padding: "10px", // Add this line to add some padding
-            borderRadius: "20px",
-
-          }}
-        >
-          <img
-            src={role.image_url}
-            alt={role.name}
-            style={{
-              maxWidth: "200px",
-              borderRadius: "100px",
-            }}
-          />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: 'column', // Add this line to make it a column
-
-              justifyContent: "center", // Add this line to center the button horizontally
-            }}
-          >
+              <div style={{ display: "flex" }}>
+                {roles.map((role, index) => (
+                  <div
+                    key={index}
+                    onClick={() => showModal(role)}
+                    style={{
+                      maxWidth: "200px",
+                      marginLeft: "10px",
+                      cursor: "pointer",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      border: "1px solid black",
+                      padding: "10px",
+                      borderRadius: "30px",
+                    }}
+                  >
+                    <img
+                      src={role.image_url}
+                      alt={role.name}
+                      style={{
+                        maxWidth: "200px",
+                        borderRadius: "100px",
+                      }}
+                    />
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                      }}
+                    >
                       <p>{role.name}</p>
 
-            <Button onClick={() => selectClass(index)}>Mint NFT</Button>
-          </div>
-        </div>
-      ))}
-      <Modal title={selectedRole?.name} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-        <Card
-          hoverable
-          cover={<img alt={selectedRole?.name} src={selectedRole?.image_url} />}
-        >
-          <Card.Meta title={selectedRole?.role} description={selectedRole?.description} />
-          <p>Primary Ability: {selectedRole?.primaryAbility.name} - {selectedRole?.primaryAbility.description}</p>
-          <p>Ultimate Ability: {selectedRole?.ultimateAbility.name} - {selectedRole?.ultimateAbility.description}</p>
-        </Card>
-      </Modal>
-          </div>
-          </div>}
+                      <Button onClick={() => selectClass(index)}>Mint NFT</Button>
+                    </div>
+                  </div>
+                ))}
+                <Modal
+                  title={selectedRole?.name}
+                  visible={isModalVisible}
+                  onOk={handleOk}
+                  onCancel={handleCancel}
+                >
+                  <Card
+                    hoverable
+                    cover={<img alt={selectedRole?.name} src={selectedRole?.image_url} />}
+                  >
+                    <Card.Meta
+                      title={selectedRole?.role}
+                      description={selectedRole?.description}
+                    />
+                    <p>
+                      Primary Ability: {selectedRole?.primaryAbility.name} -{" "}
+                      {selectedRole?.primaryAbility.description}
+                    </p>
+                    <p>
+                      Ultimate Ability: {selectedRole?.ultimateAbility.name} -{" "}
+                      {selectedRole?.ultimateAbility.description}
+                    </p>
+                  </Card>
+                </Modal>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
