@@ -12,7 +12,7 @@ Any project that is deployed successfully on Chiliz Spicy testnet qualifies for 
 
 ### Please add a sentence or two on why you're applicable for this prize.
 
-Deploying smart contract on Chiliz Spicy testnet to track Fan Tokens usage.
+Smart contract deployed on Chiliz Spicy Testnet for tracking a game leaderboard of bear kill metrics of users!
 
 ### Link to the code where the tech is used.
 
