@@ -6,12 +6,12 @@ public class BearManager : MonoBehaviour
     public Vector3[] spawnPoints; // Array of spawn points
     public float initialSpawnDelay = 2f;
     public float spawnInterval = 10f;
-    public float decreaseAmount = 0.5f;
+    public float decreaseAmount = 0.4f;
     public float minimumInterval = 3f;
     private float timeSinceLastSpawn;
     private float elapsedTime = 0f;
     private bool firstSpawn = true;
-    public float initialSpawnChance = 0.33f; // chance to spawn at start
+    public float initialSpawnChance = 0.4f; // chance to spawn at start
     public float spawnChanceIncrease = 0.05f;
     public float spawnChanceIncrementInterval = 10f;
     private float spawnChance;
@@ -46,7 +46,6 @@ public class BearManager : MonoBehaviour
 
         GameObject newBear = Instantiate(bearPrefab, spawnPoint, Quaternion.identity);
         var bearController = newBear.GetComponent<BearController>();
-
-        bearController.speed = Mathf.Log(elapsedTime + 1) / 6 + 2;
+        bearController.speed = Mathf.Log(elapsedTime + 1f) / 2f + 1.5f;
     }
 }

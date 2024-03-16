@@ -1,86 +1,103 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-
 
 public class BearController : MonoBehaviour
 {
     public float speed;
-    private Animator animator;
-    private Transform playerTransform; // To keep track of the player's position
     public GameObject table;
-    public GameObject projectile;
-    private bool tableDisabled = false;
-    private bool projectileDisabled = false;
+    public List<GameObject> projectiles;
+    public float engagementDistance = 4f; // Distance to engage the player
+
+    private Animator animator;
+    private Transform playerTransform;
     private bool isDying = false;
 
-    void Start()
+    private void Start()
     {
         animator = GetComponent<Animator>();
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform; // Assuming the player has a "Player" tag
+        projectiles = new List<GameObject>(GameObject.FindGameObjectsWithTag("Projectile"));
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    void Update()
+    private void Update()
     {
-        if(isDying){
-            speed = 0;
-            animator.SetBool("Run Forward", false);
-            animator.SetBool("WalkForward", false);
-            animator.SetBool("Attack1", false);
+        if (!isDying)
+        {
+            HandleMovementAndEngagement();
         }
-        else {
-            float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
-            if (distanceToPlayer > 2)
-            {
-                Vector3 directionToPlayer = (playerTransform.position - transform.position).normalized;
-                // Ensure the bear is always facing the player as it moves
-                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToPlayer.x, 0, directionToPlayer.z));
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
-                
-                transform.position += transform.forward * speed * Time.deltaTime;
-
-                if (speed > 4f)
-                {
-                    animator.SetBool("Run Forward", true);
-                    animator.SetBool("WalkForward", false);
-                }
-                else
-                {
-                    animator.SetBool("Run Forward", false);
-                    animator.SetBool("WalkForward", true);
-                }
-                animator.SetBool("Attack1", false);
-            }
-            else
-            {
-                speed = 0; // Stop the bear's movement
-                animator.SetBool("Run Forward", false);
-                animator.SetBool("WalkForward", false);
-                animator.SetBool("Attack1", true);
-                projectile.SetActive(false);
-                table.SetActive(false);
-                ScoreManager.Instance.ResetScore();
-                UIManager.Instance.UpdateScoreUI();
-                Light directionalLight = FindObjectOfType<Light>();
-                if (directionalLight != null && directionalLight.type == LightType.Directional)
-                {
-                    directionalLight.enabled = false;
-                }
-                StartCoroutine(ReloadSceneAfterDelay(5)); // Wait for 5 seconds before resetting the scene
-            }
-        }   
+        else
+        {
+            DisableMovementAndActions();
+        }
     }
 
-    private IEnumerator ReloadSceneAfterDelay(float delay)
+    private void HandleMovementAndEngagement()
     {
-        yield return new WaitForSeconds(delay);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the current scene
+        float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+
+        if (distanceToPlayer > engagementDistance)
+        {
+            MoveTowardsPlayer();
+        }
+        else
+        {
+            EngagePlayer();
+        }
+    }
+
+    private void MoveTowardsPlayer()
+    {
+        Vector3 directionToPlayer = (playerTransform.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToPlayer.x, 0, directionToPlayer.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        transform.position += transform.forward * speed * Time.deltaTime;
+
+        animator.SetBool("Run Forward", speed > 3f);
+        animator.SetBool("WalkForward", speed <= 3f);
+        animator.SetBool("Attack1", false);
+    }
+
+    private void EngagePlayer()
+    {
+        DisableMovementAndActions();
+        animator.SetBool("Attack1", true);
+        foreach (var projectile in projectiles){
+            projectile.SetActive(false);
+        }
+        table.SetActive(false);
+        ResetEnvironmentAndUI();
+        StartCoroutine(ReloadSceneAfterDelay(5));
+    }
+
+    private void DisableMovementAndActions()
+    {
+        speed = 0;
+        animator.SetBool("Run Forward", false);
+        animator.SetBool("WalkForward", false);
+    }
+
+    private void ResetEnvironmentAndUI()
+    {
+        ScoreManager.Instance.ResetScore();
+        UIManager.Instance.UpdateScoreUI();
+        DisableDirectionalLight();
+    }
+
+    private void DisableDirectionalLight()
+    {
+        Light directionalLight = FindObjectOfType<Light>();
+        if (directionalLight != null && directionalLight.type == LightType.Directional)
+        {
+            directionalLight.enabled = false;
+        }
     }
 
     public void HitByProjectile()
     {
-        if(!isDying){
-            Debug.Log("HitByProjectile called and isDying was false.");
+        if (!isDying)
+        {
             isDying = true;
             StartCoroutine(PlayHitAndDeathAnimations());
         }
@@ -88,18 +105,17 @@ public class BearController : MonoBehaviour
 
     private IEnumerator PlayHitAndDeathAnimations()
     {
-        // Ensure the bear stops moving and attacking
-        Debug.Log("PlayHitAndDeathAnimations coroutine started.");
-        speed = 0;
-        animator.SetBool("Run Forward", false);
-        animator.SetBool("WalkForward", false);
-        animator.SetBool("Attack1", false);
-
-        // Play "Death" animation
+        DisableMovementAndActions();
         animator.SetBool("Death", true);
-        ScoreManager.Instance.AddScore(1); 
+        ScoreManager.Instance.AddScore(1);
         UIManager.Instance.UpdateScoreUI();
-        yield return new WaitForSeconds(3.2f); // Wait for the death animation to play through
-        Destroy(gameObject); // Remove the bear after the animations
+        yield return new WaitForSeconds(3.2f); // Wait for the animation
+        Destroy(gameObject);
+    }
+
+    private IEnumerator ReloadSceneAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

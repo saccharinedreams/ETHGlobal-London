@@ -481,6 +481,7 @@
 "Assets/Scripts/BearController.cs"
 "Assets/Scripts/BearManager.cs"
 "Assets/Scripts/Projectile.cs"
+"Assets/Scripts/RespawnOnDistance.cs"
 "Assets/Scripts/ScoreManager.cs"
 "Assets/Scripts/UIManager.cs"
 -langversion:9.0
