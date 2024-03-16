@@ -12,8 +12,11 @@ This category can also cover onchain tooling to help make onchain development ea
 Try to fill any gaps not currently deployed on Base.
 
 ### Please add a sentence or two on why you're applicable for this prize.
-smart contract for tracking some game metric, nfts
+Smart contract deployed on Base Sepolia for tracking a game leaderboard of bear kill metrics of users.
 
 ### Link to the code where the tech is used.
+https://sepolia.basescan.org/tx/0xa30a048af99c5a4ae94a2a4849eb1bae32fae635a805896e0adc17966fffbed2
+
+https://sepolia.basescan.org/address/0x2110098737d42e8022261ebbff236351e0b66edb
 
 ### Additional Feedback
