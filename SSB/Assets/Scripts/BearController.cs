@@ -28,10 +28,15 @@ public class BearController : MonoBehaviour
         }
         else {
             float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
-            if (distanceToPlayer > 1.5)
+            if (distanceToPlayer > 2)
             {
-                transform.position += transform.forward * speed * Time.deltaTime;
+                Vector3 directionToPlayer = (playerTransform.position - transform.position).normalized;
+                // Ensure the bear is always facing the player as it moves
+                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToPlayer.x, 0, directionToPlayer.z));
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
                 
+                transform.position += transform.forward * speed * Time.deltaTime;
+
                 if (speed > 4f)
                 {
                     animator.SetBool("Run Forward", true);
@@ -50,22 +55,11 @@ public class BearController : MonoBehaviour
                 animator.SetBool("Run Forward", false);
                 animator.SetBool("WalkForward", false);
                 animator.SetBool("Attack1", true);
-                // if (!tableDisabled)
-                // {
-                //     table.SetActive(false);
-                //     tableDisabled = true;
-                // }
-
-                // if (!projectileDisabled)
-                // {
-                //     projectile.SetActive(false);
-                //     projectileDisabled = true;
-                // }
+                // Trigger player death
             }
         }   
     }
 
-    // Add this method to handle being hit by a projectile
     public void HitByProjectile()
     {
         if(!isDying){

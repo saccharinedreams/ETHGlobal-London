@@ -3,18 +3,22 @@ using UnityEngine;
 public class BearManager : MonoBehaviour
 {
     public GameObject bearPrefab;
-    public Vector3 spawnPoint;
-    public float initialSpawnDelay = 2f; // Set to spawn the first bear after 2 seconds
+    public Vector3[] spawnPoints; // Array of spawn points
+    public float initialSpawnDelay = 2f;
     public float spawnInterval = 10f;
     public float decreaseAmount = 1f;
     public float minimumInterval = 1f;
     private float timeSinceLastSpawn;
     private float elapsedTime = 0f;
     private bool firstSpawn = true;
+    public float initialSpawnChance = 0.33f; // chance to spawn at start
+    public float spawnChanceIncrease = 0.075f;
+    public float spawnChanceIncrementInterval = 10f;
+    private float spawnChance;
 
     private void Start()
     {
-        timeSinceLastSpawn = -initialSpawnDelay; // Start counting from negative initial delay for the first spawn
+        timeSinceLastSpawn = -initialSpawnDelay;
     }
 
     private void Update()
@@ -22,23 +26,27 @@ public class BearManager : MonoBehaviour
         timeSinceLastSpawn += Time.deltaTime;
         elapsedTime += Time.deltaTime;
 
-        // Check if it's time to spawn a new bear
         if (timeSinceLastSpawn >= spawnInterval || firstSpawn)
         {
-            SpawnBear(elapsedTime);
-            timeSinceLastSpawn = 0f; // Reset the timer
-            spawnInterval = Mathf.Max(minimumInterval, spawnInterval - decreaseAmount); // Decrease the spawn interval
+            spawnChance = Mathf.Clamp(initialSpawnChance + (spawnChanceIncrease * elapsedTime / spawnChanceIncrementInterval), 0f, 1f);
+            foreach (var spawnPoint in spawnPoints)
+            {
+                // Perform random check for each spawn point
+                if (Random.value <= spawnChance) SpawnBear(spawnPoint, elapsedTime);
+            }
+            timeSinceLastSpawn = 0f;
+            spawnInterval = Mathf.Max(minimumInterval, spawnInterval - decreaseAmount);
 
-            if (firstSpawn) firstSpawn = false; // Ensure the first spawn logic only runs once
+            if (firstSpawn) firstSpawn = false;
         }
     }
 
-    private void SpawnBear(float elapsedTime)
+    private void SpawnBear(Vector3 spawnPoint, float elapsedTime)
     {
+
         GameObject newBear = Instantiate(bearPrefab, spawnPoint, Quaternion.identity);
         var bearController = newBear.GetComponent<BearController>();
 
-        // Increase the speed based on elapsed time
-        bearController.speed = Mathf.Log(elapsedTime + 1) / 3 + 3;
+        bearController.speed = Mathf.Log(elapsedTime + 1) / 6 + 2;
     }
 }

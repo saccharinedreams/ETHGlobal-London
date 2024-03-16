@@ -7908,7 +7908,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bearPrefab: {fileID: 372700111}
-  spawnPoint: {x: 0, y: -0.2, z: -20}
+  spawnPoints:
+  - {x: 0, y: -0.35, z: -20}
+  - {x: 20, y: -0.35, z: 0}
+  - {x: -20, y: -0.35, z: 0}
   initialSpawnDelay: 10
   spawnInterval: 10
   decreaseAmount: 1
@@ -7922,7 +7925,7 @@ Transform:
   m_GameObject: {fileID: 306342528}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.00021791623, y: -0.37892988, z: -20.143904}
+  m_LocalPosition: {x: 0, y: -0.375, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
