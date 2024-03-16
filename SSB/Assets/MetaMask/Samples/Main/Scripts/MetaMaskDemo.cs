@@ -6,6 +6,7 @@ using MetaMask.Cryptography;
 using MetaMask.Models;
 using MetaMask.SocketIOClient;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.Networking;
 namespace MetaMask.Unity.Samples
@@ -246,7 +247,7 @@ namespace MetaMask.Unity.Samples
             if (nftExists)
             {
                 Debug.Log("Game started");
-
+                SceneManager.LoadScene("Super Smash Bears");
             }
             else
             {
@@ -254,6 +255,11 @@ namespace MetaMask.Unity.Samples
                 gameStartFailed?.Invoke(this, EventArgs.Empty);
 
             }
+        }
+
+        public void GameStart()
+        {
+            SceneManager.LoadScene("Super Smash Bears");
         }
 
         public void StartGetNFTs()
