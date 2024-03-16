@@ -19,7 +19,7 @@ MSquared, Starknet, VR headsets (Quest 3, Apple Vision Pro etc), and Generative 
 
 ### Please add a sentence or two on why you're applicable for this prize.
 
-Making immersive VR game with NFTs
+Super Smash Bears revolutionizes the metaverse by merging dynamic, generative worlds with the unique engagement of NFTs, offering players a novel way to interact with their digital assets through immersive VR experiences on the Meta Quest 3. See your NFTs come to life in VR with Super Smash Bears!
 
 ### Link to the code where the tech is used.
 
