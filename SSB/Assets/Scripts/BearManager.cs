@@ -16,6 +16,8 @@ public class BearManager : MonoBehaviour
     public float spawnChanceIncrementInterval = 10f;
     private float spawnChance;
 
+    public AudioSource bearSpawn;
+
     private void Start()
     {
         timeSinceLastSpawn = -initialSpawnDelay;
@@ -47,5 +49,7 @@ public class BearManager : MonoBehaviour
         GameObject newBear = Instantiate(bearPrefab, spawnPoint, Quaternion.identity);
         var bearController = newBear.GetComponent<BearController>();
         bearController.speed = Mathf.Log(elapsedTime + 1f) / 2f + 1.5f;
+
+        bearSpawn.Play();
     }
 }
