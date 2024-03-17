@@ -29,3 +29,15 @@ The Mission: Defend your ETH stockpile from incoming bears in VR! 🐻 Fight alo
 - **NFTPort API**: Streamlines the our NFT minting onboarding process.
 - **Dynamic**: Offers a user-friendly solution for wallet and traditional web2 logins.
 - **WorldID**: Leveraging the proof of unique human system to ensure a fair and secure gaming environment for all players.
+
+## Credits
+
+"AEC Regent III" (https://skfb.ly/6Z6Wz) by Rene Koh is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+
+"Ethereum logo" (https://skfb.ly/oCFTp) by alex.yefremov is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+
+"Duck" (https://skfb.ly/6R9H9) by Kitsuneko is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+
+"Toon Cat FREE" (https://skfb.ly/6TKrP) by Omabuarts Studio is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+
+"Penguin" (https://skfb.ly/oC67F) by patrakeevasveta is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
