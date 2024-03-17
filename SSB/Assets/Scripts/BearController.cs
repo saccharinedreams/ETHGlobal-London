@@ -14,6 +14,9 @@ public class BearController : MonoBehaviour
     private Transform playerTransform;
     private bool isDying = false;
 
+    public AudioSource bearAttack;
+    public AudioSource bearDeath;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -63,13 +66,22 @@ public class BearController : MonoBehaviour
     {
         DisableMovementAndActions();
         animator.SetBool("Attack1", true);
-        foreach (var projectile in projectiles){
+
+
+        // Now proceed to disable everything
+        foreach (var projectile in projectiles)
+        {
             projectile.SetActive(false);
         }
         table.SetActive(false);
         ResetEnvironmentAndUI();
+
+        bearAttack.Play();
+
+        // Finally, start the coroutine to reload the scene after a delay
         StartCoroutine(ReloadSceneAfterDelay(5));
     }
+
 
     private void DisableMovementAndActions()
     {
@@ -100,6 +112,7 @@ public class BearController : MonoBehaviour
         {
             isDying = true;
             StartCoroutine(PlayHitAndDeathAnimations());
+            bearDeath.Play();
         }
     }
 
