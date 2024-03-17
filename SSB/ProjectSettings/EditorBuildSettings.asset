@@ -4,7 +4,13 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MetaMask Main.unity
+    guid: e6406c88649c7cd4cb9624c82f0a3f82
+  - enabled: 1
+    path: Assets/Scenes/Super Smash Bears.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 9c56ee6bdaae8ac4d9bf1cc8f5635bef, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 776b31c250996da4689422e2770d32a6, type: 2}

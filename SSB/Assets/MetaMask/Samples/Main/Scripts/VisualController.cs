@@ -79,9 +79,10 @@ namespace MetaMask.Unity.Samples
         {
             // Wait for new frame
             yield return new WaitForEndOfFrame();
-            
             OpenMainScreen();
             WalletStartVisuals();
+            metaMaskTest.StartGetNFTs(() => metaMaskTest.StartGame());
+            metaMaskTest.StartGame();
         }
 
         private void OnWalletPaused(object sender, EventArgs e)

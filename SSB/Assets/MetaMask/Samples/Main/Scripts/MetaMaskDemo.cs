@@ -72,6 +72,7 @@ namespace MetaMask.Unity.Samples
             MetaMaskUnity.Instance.Events.WalletReady += walletReady;
             MetaMaskUnity.Instance.Events.WalletPaused += walletPaused;
             MetaMaskUnity.Instance.Events.EthereumRequestResultReceived += TransactionResult;
+            ConnectAndSign();
         }
 
         private void OnDisable()
@@ -244,7 +245,7 @@ namespace MetaMask.Unity.Samples
 
         public void StartGame()
         {
-            if (nftExists)
+            if (true) // change to nftExists
             {
                 Debug.Log("Game started");
                 SceneManager.LoadScene("Super Smash Bears");
@@ -291,6 +292,20 @@ namespace MetaMask.Unity.Samples
                     // Here you can process the JSON response as needed
                 }
             }
+        }
+
+        public void StartGetNFTs(Action onComplete)
+        {
+            StartCoroutine(GetNFTsCoroutine(onComplete));
+        }
+
+        private IEnumerator GetNFTsCoroutine(Action onComplete)
+        {
+            // Simulate asynchronous work, e.g., web request
+            yield return new WaitForSeconds(2); // Simulating delay
+
+            // Once done, invoke the callback
+            onComplete?.Invoke();
         }
 
         #endregion
