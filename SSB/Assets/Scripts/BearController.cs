@@ -16,9 +16,11 @@ public class BearController : MonoBehaviour
 
     public AudioSource bearAttack;
     public AudioSource bearDeath;
+    public AudioSource backgroundMusic;
 
     private void Start()
     {
+        backgroundMusic.Play();
         animator = GetComponent<Animator>();
         projectiles = new List<GameObject>(GameObject.FindGameObjectsWithTag("Projectile"));
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
