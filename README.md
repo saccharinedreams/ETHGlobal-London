@@ -1,70 +1,31 @@
-# Getting Started with Create Super Smash Bears
+# Super Smash Bears VR
 
-This project was bootstrapped with [Create Super Smash Bears](https://github.com/facebook/create-react-app).
+https://ethglobal.com/showcase/super-smash-bears-hkz03
 
-## Available Scripts
+## Instructions
 
-In the project directory, you can run:
+npm install
+npm start
 
-### `npm start`
+## Intro
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Do you ever feel like your NFTs are just collecting dust in your wallet?
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Who here wishes you could see and interact with your NFTs in Virtual Reality?
 
-### `npm test`
+Us too. That’s why we made…
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Super Smash Bears!!
 
-### `npm run build`
+The Mission: Defend your ETH stockpile from incoming bears in VR! 🐻 Fight alongside your NFTs like never before with Super Smash Bears!
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Tech Stack 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create Super Smash Bears documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **Unity Engine**: Powers the core game development, offering a versatile platform for creating immersive VR experiences.
+- **MetaMask Unity Plugin**: Integrates Ethereum blockchain functionalities, enabling VR wallet connectivity, transactions, and attestations.
+- **Meta XR & Oculus XR Plugins**: Ensure compatibility with Meta Quest 3 (our first Quest 3 app!), providing the necessary tools for a seamless VR experience.
+- **C# Programming**: The backbone of game logic, handling everything from user interactions to complex gameplay mechanics.
+- **Alchemy API**: Facilitates the retrieval of NFT assets from player wallets, enhancing the game's blockchain integration.
+- **NFTPort API**: Streamlines the our NFT minting onboarding process.
+- **Dynamic**: Offers a user-friendly solution for wallet and traditional web2 logins.
+- **WorldID**: Leveraging the proof of unique human system to ensure a fair and secure gaming environment for all players.
